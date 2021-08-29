@@ -3,6 +3,7 @@ package com.dungeon.lesson.service;
 import com.dungeon.lesson.Configuration;
 import com.dungeon.lesson.menu.AuthorMenu;
 import com.dungeon.lesson.menu.BookMenu;
+import com.dungeon.lesson.menu.GenreMenu;
 import com.dungeon.lesson.model.Author;
 import com.dungeon.lesson.model.Book;
 import com.dungeon.lesson.model.Gender;
@@ -16,17 +17,18 @@ import java.util.Scanner;
 public class MainMenuService {
 
     private PurchaseService purchaseService;
-    private GenreService genreService;
+
     private Scanner scanner = new Scanner(System.in);
     private final BookMenu bookMenu;
     private final AuthorMenu authorMenu;
+    private final GenreMenu genreMenu;
 //    private void start(){
 
     public MainMenuService() {
        bookMenu= new BookMenu(scanner);
        authorMenu= new AuthorMenu(scanner);
         purchaseService = new PurchaseService(Configuration.getConnection());
-        genreService=new GenreService(Configuration.getConnection());
+        genreMenu= new GenreMenu(scanner);
     }
 
     //    }
@@ -43,52 +45,12 @@ public class MainMenuService {
                case 2->{
                    authorMenu.startMenu();
                }
+               case 3->{
+                   genreMenu.startMenu();
+               }
 
 
-                case 23 -> {
-                    genreService.printGenres(genreService.getAllGenres());
-                }
-                case 24 -> {
-                    System.out.println(genreService.createGenre());
-                }
-                case 25 -> {
-                    System.out.print("введите название для поиска: ");
-                    scanner.nextLine();
-                    String name = scanner.nextLine();
-                    List<Genre> genres = genreService.searchByName(name);
-                    genreService.printGenres(genres);
-                }
-                case 26 -> {
-                    System.out.println("введите описание для поиска: ");
-                    scanner.nextLine();
-                    String description = scanner.nextLine();
-                    List<Genre> genres = genreService.searchByDescription(description);
-                    genreService.printGenres(genres);
-                }
-                case 27 -> {
-                    System.out.println("введите дату для поиска:");
-                    int yearOfOriginal = scanner.nextInt();
-                    List<Genre> genres = genreService.searchByYearOfOriginal(yearOfOriginal);
-                    genreService.printGenres(genres);
-                }
-                case 28 -> {
-                    Comparator<Genre> genreComparator = Comparator.comparing(Genre::getName);
-                    List<Genre> genres = genreService.getAllGenres();
-                    genres.sort(genreComparator);
-                    genreService.printGenres(genres);
-                }
-                case 29 -> {
-                    Comparator<Genre> genreComparator = Comparator.comparing(Genre::getDescription);
-                    List<Genre> genres = genreService.getAllGenres();
-                    genres.sort(genreComparator);
-                    genreService.printGenres(genres);
-                }
-                case 30 -> {
-                    Comparator<Genre> genreComparator = Comparator.comparing(Genre::getYearOfOrigin);
-                    List<Genre> genres = genreService.getAllGenres();
-                    genres.sort(genreComparator);
-                    genreService.printGenres(genres);
-                }
+
                 case 31 -> {
                     purchaseService.printPurchases(purchaseService.getAllPurchases());
                 }
@@ -202,16 +164,9 @@ public class MainMenuService {
     private void printMenu() {
         System.out.println("1 действия с книгами: ");
         System.out.println("2 действия с авторами: ");
+        System.out.println("3 действия с жанрами: ");
 
 
-        System.out.println("23 показать все жанры: ");
-        System.out.println("24 добавить жанр: ");
-        System.out.println("25 поиск жанра по названию: ");
-        System.out.println("26 поиск жанра по описанию: ");
-        System.out.println("27 поиск жанра по году возникновения: ");
-        System.out.println("28 сортировка по названию: ");
-        System.out.println("29 сортировка по описанию: ");
-        System.out.println("30 сортровка по году возникновения: ");
         System.out.println("31 показать историю покупки: ");
         System.out.println("32 поиск по названи книги: ");
         System.out.println("33 поиск по имени : ");
