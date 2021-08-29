@@ -16,7 +16,7 @@ public class GenreService {
 
     public static final String BORDER = "--------------------------------------------------------------------------"+System.lineSeparator();
     public static final String HEADER = "| id |      название      |       описание        |   год возникновеня   |"+System.lineSeparator();
-    public static final String GENRE_FORMAT = "| %3d | %-18.18s | %-21.21 |     %4d           |%n";
+    public static final String GENRE_FORMAT = "| %3d | %-18.18s | %-21.21s |     %4d           |%n";
     private final GenreDao genreDao;
     private final Scanner scanner = new Scanner(System.in);
 
@@ -81,6 +81,31 @@ public class GenreService {
         }
         return genres;
     }
+    public void deleteGenre(Genre genre) {
+        try {
+            genreDao.deleteGenre(genre);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void deleteGenre() {
+        List<Genre> genres = getAllGenres();
+        printGenres(genres);
+        System.out.println("выберите жанр для удаления: ");
+        boolean isCorrect = false;
+        do {
+            int delete = scanner.nextInt();
+            if (delete > 0 && delete <= genres.size()) {
+               Genre genre = genres.get(delete - 1);
+                deleteGenre(genre);
+                isCorrect = true;
+            } else {
+                System.out.println("введите существующий номер: ");
+            }
+        } while (!isCorrect);
+        System.out.println("жанр удален ");
+    }
+
 
     public List<Genre> searchByDescription(String description){
         List<Genre>genres=new LinkedList<>();
