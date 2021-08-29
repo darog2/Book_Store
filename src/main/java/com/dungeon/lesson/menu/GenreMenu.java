@@ -80,14 +80,15 @@ public class GenreMenu {
     }
 
     private void printMenu() {
-        System.out.println("1 показать все жанры: ");
-        System.out.println("2 добавить жанр: ");
-        System.out.println("3 поиск жанра по названию: ");
-        System.out.println("4 поиск жанра по описанию: ");
-        System.out.println("5 поиск жанра по году возникновения: ");
-        System.out.println("6 сортировка по названию: ");
-        System.out.println("7 сортировка по описанию: ");
-        System.out.println("8 сортровка по году возникновения: ");
+        System.out.println("1 показать все жанры ");
+        System.out.println("2 добавить жанр ");
+        System.out.println("3 поиск жанра по названию ");
+        System.out.println("4 поиск жанра по описанию ");
+        System.out.println("5 поиск жанра по году возникновения ");
+        System.out.println("6 сортировка по названию ");
+        System.out.println("7 сортировка по описанию ");
+        System.out.println("8 сортровка по году возникновения ");
+        System.out.println("99 вернутся в предыдущее меню. ");
     }
 }
 

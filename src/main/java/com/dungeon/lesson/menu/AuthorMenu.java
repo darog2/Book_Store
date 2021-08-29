@@ -122,17 +122,18 @@ public class AuthorMenu {
     }
 
     private void printMenu() {
-        System.out.println("1 посмотреть авторов: ");
-        System.out.println("2 добавить авторов: ");
-        System.out.println("3 поиск авторов по имени: ");
-        System.out.println("4 поиск авторов по фамили: ");
-        System.out.println("5 поиск авторов по году рождения: ");
-        System.out.println("6 поиск авторов по стране: ");
-        System.out.println("7 поиск авторов по полу: ");
-        System.out.println("8 сортировка по имени автора: ");
-        System.out.println("9 сортировка по фамилии автора: ");
-        System.out.println("10 сортировка по году: ");
-        System.out.println("11 сортировка по стране: ");
-        System.out.println("12 сортировка по полу: ");
+        System.out.println("1 посмотреть авторов ");
+        System.out.println("2 добавить авторов ");
+        System.out.println("3 поиск авторов по имени ");
+        System.out.println("4 поиск авторов по фамили ");
+        System.out.println("5 поиск авторов по году рождения ");
+        System.out.println("6 поиск авторов по стране ");
+        System.out.println("7 поиск авторов по полу ");
+        System.out.println("8 сортировка по имени автора ");
+        System.out.println("9 сортировка по фамилии автора ");
+        System.out.println("10 сортировка по году ");
+        System.out.println("11 сортировка по стране ");
+        System.out.println("12 сортировка по полу ");
+        System.out.println("99 вернутся в предыдущее меню. ");
     }
 }
