@@ -37,50 +37,18 @@ public class BookMenu {
                     bookService.deleteBook();
                 }
                 case 4 -> {
-                    System.out.print("введите название для поиска: ");
-                    scanner.nextLine();
-                    String name = scanner.nextLine();
-                    List<Book> books = bookService.searchBooks(name);
-                    bookService.printBooks(books);
+                    searchMenu();
+                }
 
+                case 5 ->{
+                    sortMenu();
                 }
-                case 5 -> {
-                    System.out.print("введите название  автора: ");
-                    scanner.nextLine();
-                    String author = scanner.nextLine();
-                    List<Book> books = bookService.searchBooksByAuthor(author);
-                    bookService.printBooks(books);
-                }
-                case 6 -> {
-                    System.out.print("введите год книги: ");
-                    int yearOfIssue = scanner.nextInt();
-                    List<Book> books = bookService.searchBooksByYear(yearOfIssue);
-                    bookService.printBooks(books);
-                }
-                case 7 -> {
-                    Comparator<Book> bookComparator = Comparator.comparing(Book::getAuthor);
-                    List<Book> books = bookService.getAllBooks();
-                    books.sort(bookComparator);
-                    bookService.printBooks(books);
-                }
-                case 8 -> {
-                    Comparator<Book> bookComparator = Comparator.comparing(Book::getName);
-                    List<Book> books = bookService.getAllBooks();
-                    books.sort(bookComparator);
-                    bookService.printBooks(books);
-                }
-                case 9 -> {
-                    Comparator<Book> bookComparator = Comparator.comparing(Book::getYearOfIssue);
-                    List<Book> books = bookService.getAllBooks();
-                    books.sort(bookComparator);
-                    bookService.printBooks(books);
-                }
-                case 10 -> {
-                    Comparator<Book> bookComparator = Comparator.comparing(Book::getPrice);
-                    List<Book> books = bookService.getAllBooks();
-                    books.sort(bookComparator);
-                    bookService.printBooks(books);
-                }
+//                case 10 -> {
+//                    Comparator<Book> bookComparator = Comparator.comparing(Book::getPrice);
+//                    List<Book> books = bookService.getAllBooks();
+//                    books.sort(bookComparator);
+//                    bookService.printBooks(books);
+//                }
                 case 99 -> {
                 }
 
@@ -94,17 +62,111 @@ public class BookMenu {
 
     }
 
+    public void searchMenu(){
+        int choice = 0;
+        do {
+            printSearchMenu();
+            choice = scanner.nextInt();
+            switch (choice) {
+
+                case 1 -> {
+                    System.out.print("введите название для поиска: ");
+                    scanner.nextLine();
+                    String name = scanner.nextLine();
+                    List<Book> books = bookService.searchBooks(name);
+                    bookService.printBooks(books);
+
+                }
+                case 2 -> {
+                    System.out.print("введите название  автора: ");
+                    scanner.nextLine();
+                    String author = scanner.nextLine();
+                    List<Book> books = bookService.searchBooksByAuthor(author);
+                    bookService.printBooks(books);
+                }
+                case 3 -> {
+                    System.out.print("введите год книги: ");
+                    int yearOfIssue = scanner.nextInt();
+                    List<Book> books = bookService.searchBooksByYear(yearOfIssue);
+                    bookService.printBooks(books);
+                }
+
+                case 99 -> {
+                }
+
+
+                default -> {
+                    System.out.println("неправильная команда");
+                }
+            }
+        }
+        while (choice != 99);
+
+    }
     private void printMenu() {
-        System.out.println("1. показать все книги ");
-        System.out.println("2. добавить книгу  ");
-        System.out.println("3. удалить книгу  ");
-        System.out.println("4. найти книгу по названию: ");
-        System.out.println("5. найти книгу по автору: ");
-        System.out.println("6. поиск по году: ");
-        System.out.println("7. сортировка по автору");
-        System.out.println("8. сортировка по названию");
-        System.out.println("9. сортировка по году выпуска");
-        System.out.println("10. сортировка по цене");
-        System.out.println("99 вернутся в главное меню.");
+        System.out.println(" Меню работы с книгами ");
+        System.out.println("1. показать все  ");
+        System.out.println("2. добавить   ");
+        System.out.println("3. удалить   ");
+        System.out.println("4. поиск ");
+        System.out.println("5. сортировка ");
+        System.out.println("99 вернутся в предыдущее меню.");
+
+    }
+    private void printSearchMenu(){
+         System.out.println(" поиск по  ");
+         System.out.println("1. названию   ");
+         System.out.println("2. автору   ");
+         System.out.println("3. году выпуска  ");
+         System.out.println("4. цене");
+
+         System.out.println("99 вернутся в предыдущее меню.");
+     }
+    private void printSortMenu(){
+         System.out.println(" сортировка по  ");
+         System.out.println("1. названию   ");
+         System.out.println("2. автору   ");
+         System.out.println("3. году выпуска  ");
+         System.out.println("4. цене");
+
+         System.out.println("99 вернутся в предыдущее меню.");
+     }
+    public void sortMenu(){
+        int choice = 0;
+        do {
+            printSortMenu();
+            choice = scanner.nextInt();
+            switch (choice) {
+
+                case 1 -> {
+                    Comparator<Book> bookComparator = Comparator.comparing(Book::getAuthor);
+                    List<Book> books = bookService.getAllBooks();
+                    books.sort(bookComparator);
+                    bookService.printBooks(books);
+                }
+                case 2 -> {
+                    Comparator<Book> bookComparator = Comparator.comparing(Book::getName);
+                    List<Book> books = bookService.getAllBooks();
+                    books.sort(bookComparator);
+                    bookService.printBooks(books);
+                }
+                case 3 -> {
+                    Comparator<Book> bookComparator = Comparator.comparing(Book::getYearOfIssue);
+                    List<Book> books = bookService.getAllBooks();
+                    books.sort(bookComparator);
+                    bookService.printBooks(books);
+                }
+
+                case 99 -> {
+                }
+
+
+                default -> {
+                    System.out.println("неправильная команда");
+                }
+            }
+        }
+        while (choice != 99);
+
     }
 }
