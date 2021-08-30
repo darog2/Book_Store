@@ -79,6 +79,32 @@ public class AuthorService {
         return author;
     }
 
+    public void deleteAuthor(Author author) {
+        try {
+            authorDao.deleteAuthor(author);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAuthor() {
+        List<Author> authors = getAllAuthors();
+        printAuthors(authors);
+        System.out.println("выберите автора для удаления: ");
+        boolean isCorrect = false;
+        do {
+            int delete = scanner.nextInt();
+            if (delete > 0 && delete <= authors.size()) {
+                Author author= authors.get(delete - 1);
+                deleteAuthor(author);
+                isCorrect = true;
+            } else {
+                System.out.println("введите существующий номер: ");
+            }
+        } while (!isCorrect);
+        System.out.println("книга удалена ");
+    }
+
     public void printAuthors(List<Author> authors) {
         if (authors.size() > 0) {
             StringBuilder builder = new StringBuilder();

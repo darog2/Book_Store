@@ -19,6 +19,7 @@ public class AuthorDao {
     private static final String SEARCH_BY_NAME_AUTHOR = "select id,name ,last_name,date_of_birth,country,gender from authors WHERE  lower(name) like lower (?) ;";
     private static final String SELECT_ALL = "select id,name,last_name,date_of_birth,country,gender from authors order by id;";
     private static final String SEARCH_AUTHOR_BY_LAST_NAME = "select id,name ,last_name,date_of_birth ,country,gender from authors WHERE lower (last_name) like lower (?) ;";
+    private static final String DELETE_AUTHOR = "delete from authors where id=?;";
     private static final String SEARCH_AUTHOR_BY_DATE_OF_BIRTH = "select id,name ,last_name,date_of_birth ,country,gender from authors WHERE extract(YEAR from date_of_birth)=? ;";
     private static final String SEARCH_AUTHOR_BY_COUNTRY = "select id,name ,last_name,date_of_birth ,country,gender from authors WHERE lower(country) like (?);";
     private static final String SEARCH_AUTHOR_BY_GENDER = "select id,name ,last_name,date_of_birth ,country,gender from authors WHERE gender=?::public.gender ;";
@@ -27,6 +28,15 @@ public class AuthorDao {
         this.connection = connection;
     }
 
+    public void deleteAuthor(Author author) throws SQLException {
+
+        PreparedStatement statement = connection.prepareStatement(DELETE_AUTHOR);
+        statement.setInt(1, author.getId());
+        statement.executeUpdate();
+//        connection.commit();
+        statement.close();
+
+    }
 
     public List<Author> getAllAuthors() throws SQLException {
         List<Author> authors = new LinkedList<>();

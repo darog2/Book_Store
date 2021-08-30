@@ -14,51 +14,100 @@ public class AuthorMenu {
     private final Scanner scanner;
 
     public AuthorMenu(Scanner scanner) {
-        this.scanner= scanner;
+        this.scanner = scanner;
         authorService = new AuthorService(Configuration.getConnection());
 
     }
-    public void startMenu(){
+
+    public void startMenu() {
         int choice = 0;
         do {
             printMenu();
             choice = scanner.nextInt();
             switch (choice) {
 
-            case 1 -> {
-                authorService.printAuthors(authorService.getAllAuthors());
+                case 1 -> {
+                    authorService.printAuthors(authorService.getAllAuthors());
+                }
+                case 2 -> {
+                    System.out.println(authorService.createAuthor());
+                }
+                case 3 -> {
+                    authorService.deleteAuthor();
+                }
+                case 4 -> {
+                    searchMenu();
+                }
+                case 5 ->{
+                    sortMenu();
+                }
+
+                case 99 -> {
+                }
+
+                default -> {
+                    System.out.println("неправильная команда");
+                }
             }
-            case 2 -> {
-                System.out.println(authorService.createAuthor());
-            }
-            case 3 -> {
-                System.out.print("введите имя: ");
-                scanner.nextLine();
-                String name = scanner.nextLine();
-                List<Author> authors = authorService.searchAuthorsByName(name);
-                authorService.printAuthors(authors);
-            }
-            case 4 -> {
-                System.out.print("введите фамилию: ");
-                scanner.nextLine();
-                String lastName = scanner.nextLine();
-                List<Author> authors = authorService.searchAuthorsByLastName(lastName);
-                authorService.printAuthors(authors);
-            }
-            case 5 -> {
-                System.out.print("введите год: ");
-                int dateOfBirth = scanner.nextInt();
-                List<Author> authors = authorService.searchAuthorsByDateOfBirth(dateOfBirth);
-                authorService.printAuthors(authors);
-            }
-            case 6 -> {
-                System.out.print("введите страну: ");
-                scanner.nextLine();
-                String country = scanner.nextLine();
-                List<Author> authors = authorService.searchAuthorsByCountry(country);
-                authorService.printAuthors(authors);
-            }
-                case 7 -> {
+        }
+        while (choice != 99);
+    }
+
+    private void printMenu() {
+        System.out.println("меню работы с авторами");
+        System.out.println("1 посмотреть ");
+        System.out.println("2 добавить  ");
+        System.out.println("3 удалить");
+        System.out.println("4 поиск поиск ");
+        System.out.println("5 сортировка");
+
+        System.out.println("99 вернутся в предыдущее меню. ");
+    }
+
+    private void printSearchMenu() {
+        System.out.println("поиск по ");
+        System.out.println("имени ");
+        System.out.println(" фамилии");
+        System.out.println("дате рождения");
+        System.out.println(" стране ");
+        System.out.println("полу");
+        System.out.println("99 выйти в предыдущие меню");
+    }
+
+    private void searchMenu() {
+        int choice = 0;
+        do {
+            printSearchMenu();
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("введите имя: ");
+                    scanner.nextLine();
+                    String name = scanner.nextLine();
+                    List<Author> authors = authorService.searchAuthorsByName(name);
+                    authorService.printAuthors(authors);
+                }
+                case 2 -> {
+                    System.out.print("введите фамилию: ");
+                    scanner.nextLine();
+                    String lastName = scanner.nextLine();
+                    List<Author> authors = authorService.searchAuthorsByLastName(lastName);
+                    authorService.printAuthors(authors);
+                }
+                case 3 -> {
+                    System.out.print("введите год: ");
+                    int dateOfBirth = scanner.nextInt();
+                    List<Author> authors = authorService.searchAuthorsByDateOfBirth(dateOfBirth);
+                    authorService.printAuthors(authors);
+                }
+                case 4 -> {
+                    System.out.print("введите страну: ");
+                    scanner.nextLine();
+                    String country = scanner.nextLine();
+                    List<Author> authors = authorService.searchAuthorsByCountry(country);
+                    authorService.printAuthors(authors);
+                }
+                case 5 -> {
                     scanner.nextLine();
                     System.out.print("введите пол(M -- мужской, F -- женский):  ");
                     Gender gender = null;
@@ -79,32 +128,60 @@ public class AuthorMenu {
                     authorService.printAuthors(authorService.searchAuthorsByGender(gender));
 
                 }
-                case 8 -> {
+                case 99 -> {
+                }
+
+                default -> {
+                    System.out.println("неправильная команда");
+                }
+            }
+        }
+        while (choice != 99);
+    }
+
+    private void printSortMenu() {
+        System.out.println("сортировать по ");
+        System.out.println("1 имени");
+        System.out.println("2 фамилии");
+        System.out.println("3 дате рождения");
+        System.out.println("4 стране");
+        System.out.println("5 полу");
+        System.out.println("99 вернутся в предыдущее меню. ");
+
+    }
+
+    private void sortMenu() {
+        int choice = 0;
+        do {
+            printSortMenu();
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getName);
                     List<Author> authors = authorService.getAllAuthors();
                     authors.sort(authorComparator);
                     authorService.printAuthors(authors);
 
                 }
-                case 9 -> {
+                case 2 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getLastName);
                     List<Author> authors = authorService.getAllAuthors();
                     authors.sort(authorComparator);
                     authorService.printAuthors(authors);
                 }
-                case 10 -> {
+                case 3 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getDateOfBirth);
                     List<Author> authors = authorService.getAllAuthors();
                     authors.sort(authorComparator);
                     authorService.printAuthors(authors);
                 }
-                case 11 -> {
+                case 4 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getCountry);
                     List<Author> authors = authorService.getAllAuthors();
                     authors.sort(authorComparator);
                     authorService.printAuthors(authors);
                 }
-                case 12 -> {
+                case 5 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getGender);
                     List<Author> authors = authorService.getAllAuthors();
                     authors.sort(authorComparator);
@@ -120,20 +197,10 @@ public class AuthorMenu {
         }
         while (choice != 99);
     }
-
-    private void printMenu() {
-        System.out.println("1 посмотреть авторов ");
-        System.out.println("2 добавить авторов ");
-        System.out.println("3 поиск авторов по имени ");
-        System.out.println("4 поиск авторов по фамили ");
-        System.out.println("5 поиск авторов по году рождения ");
-        System.out.println("6 поиск авторов по стране ");
-        System.out.println("7 поиск авторов по полу ");
-        System.out.println("8 сортировка по имени автора ");
-        System.out.println("9 сортировка по фамилии автора ");
-        System.out.println("10 сортировка по году ");
-        System.out.println("11 сортировка по стране ");
-        System.out.println("12 сортировка по полу ");
-        System.out.println("99 вернутся в предыдущее меню. ");
-    }
 }
+
+
+
+
+
+
