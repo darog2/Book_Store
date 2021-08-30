@@ -79,7 +79,7 @@ public class AuthorService {
         return author;
     }
 
-    public void deleteAuthor(Author author) {
+    private void deleteAuthor(Author author) {
         try {
             authorDao.deleteAuthor(author);
         } catch (SQLException e) {
