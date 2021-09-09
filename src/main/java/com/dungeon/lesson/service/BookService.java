@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public class BookService {
+public class BookService extends AbstractService<Book> {
     /*
     методы бук сервиса:
     - getAllBooks будет возвращать List <Book>
@@ -30,7 +30,8 @@ public class BookService {
         bookDao = new BookDao(connection);
     }
 
-    private void saveBook(Book book) {
+    @Override
+    protected void save(Book book) {
         try {
             bookDao.saveBook(book);
         } catch (SQLException e) {
@@ -38,7 +39,8 @@ public class BookService {
         }
     }
 
-    public void deleteBook(Book book) {
+    @Override
+    protected void delete(Book book) {
         try {
             bookDao.deleteBook(book);
         } catch (SQLException e) {
@@ -46,7 +48,8 @@ public class BookService {
         }
     }
 
-    public List<Book> getAllBooks() {
+    @Override
+    public List<Book> getAll() {
         List<Book> books = new LinkedList<>();
         try {
             return bookDao.getAllBooks();
@@ -56,7 +59,8 @@ public class BookService {
         return books;
     }
 
-    public Book createBook() {
+    @Override
+    public Book create() {
         Book book = new Book();
         System.out.print("введите автора: ");
         book.setAuthor(scanner.nextLine());
@@ -66,20 +70,21 @@ public class BookService {
         book.setYearOfIssue(scanner.nextInt());
         System.out.print("введите цену: ");
         book.setPrice(scanner.nextDouble());
-        saveBook(book);
+        save(book);
         return book;
     }
 
-    public void deleteBook() {
-        List<Book> books = getAllBooks();
-        printBooks(books);
+    @Override
+    public void delete() {
+        List<Book> books = getAll();
+        print(books);
         System.out.println("выберите номер книги для удаления: ");
         boolean isCorrect = false;
         do {
             int delete = scanner.nextInt();
             if (delete > 0 && delete <= books.size()) {
                 Book book = books.get(delete - 1);
-                deleteBook(book);
+                delete(book);
                 isCorrect = true;
             } else {
                 System.out.println("введите существующий номер: ");
@@ -88,8 +93,9 @@ public class BookService {
         System.out.println("книга удалена ");
     }
 
-    public void printBooks(List<Book> books) {
-        if (books.size()>0){
+    @Override
+    public void print(List<Book> books) {
+        if (books.size() > 0) {
             StringBuilder builder = new StringBuilder();
             builder.append(BORDER);
             builder.append(HEADER);

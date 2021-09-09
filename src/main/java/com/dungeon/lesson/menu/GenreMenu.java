@@ -25,13 +25,13 @@ public final class GenreMenu extends AbstractMenu {
             choice = scanner.nextInt();
             switch (choice) {
                 case 1 -> {
-                    genreService.printGenres(genreService.getAllGenres());
+                    genreService.print(genreService.getAll());
                 }
                 case 2 -> {
-                    System.out.println(genreService.createGenre());
+                    System.out.println(genreService.create());
                 }
                 case 3->{
-                   genreService.deleteGenre();
+                    genreService.delete();
                 }
                 case 4->{
                     searchMenu();
@@ -70,20 +70,20 @@ public final class GenreMenu extends AbstractMenu {
                     scanner.nextLine();
                     String name = scanner.nextLine();
                     List<Genre> genres = genreService.searchByName(name);
-                    genreService.printGenres(genres);
+                    genreService.print(genres);
                 }
                 case 2 -> {
                     System.out.println("введите описание для поиска: ");
                     scanner.nextLine();
                     String description = scanner.nextLine();
                     List<Genre> genres = genreService.searchByDescription(description);
-                    genreService.printGenres(genres);
+                    genreService.print(genres);
                 }
                 case 3 -> {
                     System.out.println("введите дату для поиска:");
                     int yearOfOriginal = scanner.nextInt();
                     List<Genre> genres = genreService.searchByYearOfOriginal(yearOfOriginal);
-                    genreService.printGenres(genres);
+                    genreService.print(genres);
                 }
                 case 99 -> {
                 }
@@ -113,21 +113,21 @@ public final class GenreMenu extends AbstractMenu {
             switch (choice) {
                 case 1 -> {
                     Comparator<Genre> genreComparator = Comparator.comparing(Genre::getName);
-                    List<Genre> genres = genreService.getAllGenres();
+                    List<Genre> genres = genreService.getAll();
                     genres.sort(genreComparator);
-                    genreService.printGenres(genres);
+                    genreService.print(genres);
                 }
                 case 2 -> {
                     Comparator<Genre> genreComparator = Comparator.comparing(Genre::getDescription);
-                    List<Genre> genres = genreService.getAllGenres();
+                    List<Genre> genres = genreService.getAll();
                     genres.sort(genreComparator);
-                    genreService.printGenres(genres);
+                    genreService.print(genres);
                 }
                 case 3 -> {
                     Comparator<Genre> genreComparator = Comparator.comparing(Genre::getYearOfOrigin);
-                    List<Genre> genres = genreService.getAllGenres();
+                    List<Genre> genres = genreService.getAll();
                     genres.sort(genreComparator);
-                    genreService.printGenres(genres);
+                    genreService.print(genres);
                 }
                 case 99 -> {
                 }

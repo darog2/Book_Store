@@ -24,13 +24,13 @@ public class  PurchaseMenu extends AbstractMenu{
             choice = scanner.nextInt();
             switch (choice) {
                 case 1 -> {
-                    purchaseService.printPurchases(purchaseService.getAllPurchases());
+                    purchaseService.print(purchaseService.getAll());
                 }
                 case 2 -> {
-                    purchaseService.createPurchase();
+                    purchaseService.create();
                 }
                 case 3 -> {
-                    purchaseService.deletePurchases();
+                    purchaseService.delete();
                 }
                 case 4 -> {
                     searchMenu();
@@ -75,49 +75,49 @@ public class  PurchaseMenu extends AbstractMenu{
                     scanner.nextLine();
                     String name = scanner.nextLine();
                     List<Purchase> purchases = purchaseService.searchPurchasesNames(name);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 2 -> {
                     System.out.println("поиск по имени покупателя: ");
                     scanner.nextLine();
                     String buyerName = scanner.nextLine();
                     List<Purchase> purchases = purchaseService.searchBuyerNames(buyerName);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 3 -> {
                     System.out.println("поиск по фамилии: ");
                     scanner.nextLine();
                     String lastName = scanner.nextLine();
                     List<Purchase> purchases = purchaseService.searchLastNames(lastName);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 4 -> {
                     System.out.println("поиск стране: ");
                     scanner.nextLine();
                     String country = scanner.nextLine();
                     List<Purchase> purchases = purchaseService.searchCountry(country);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 5 -> {
                     System.out.println("поиск по региону: ");
                     scanner.nextLine();
                     String region = scanner.nextLine();
                     List<Purchase> purchases = purchaseService.searchRegions(region);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 6 -> {
                     System.out.println("поиск по городу:  : ");
                     scanner.nextLine();
                     String locality = scanner.nextLine();
                     List<Purchase> purchases = purchaseService.searchLocality(locality);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 7 -> {
                     System.out.println("поиск по почтовому индексу: ");
                     scanner.nextInt();
                     int zipCode = scanner.nextInt();
                     List<Purchase> purchases = purchaseService.searchZipCodes(zipCode);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 99 -> {
 
@@ -151,45 +151,45 @@ public class  PurchaseMenu extends AbstractMenu{
             switch (choice) {
                 case 1 -> {
                     Comparator<Purchase> purchaseComparator = Comparator.comparing(Purchase::getName);
-                    List<Purchase> purchases = purchaseService.getAllPurchases();
+                    List<Purchase> purchases = purchaseService.getAll();
                     purchases.sort(purchaseComparator);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 2 -> {
                     Comparator<Purchase> purchaseComparator = Comparator.comparing(Purchase::getBuyerName);
-                    List<Purchase> purchases = purchaseService.getAllPurchases();
+                    List<Purchase> purchases = purchaseService.getAll();
                     purchases.sort(purchaseComparator);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 3 -> {
                     Comparator<Purchase> purchaseComparator = Comparator.comparing(Purchase::getLastName);
-                    List<Purchase> purchases = purchaseService.getAllPurchases();
+                    List<Purchase> purchases = purchaseService.getAll();
                     purchases.sort(purchaseComparator);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 4 -> {
                     Comparator<Purchase> purchaseComparator = Comparator.comparing(Purchase::getCountry);
-                    List<Purchase> purchases = purchaseService.getAllPurchases();
+                    List<Purchase> purchases = purchaseService.getAll();
                     purchases.sort(purchaseComparator);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 5 -> {
                     Comparator<Purchase> purchaseComparator = Comparator.comparing(Purchase::getRegion);
-                    List<Purchase> purchases = purchaseService.getAllPurchases();
+                    List<Purchase> purchases = purchaseService.getAll();
                     purchases.sort(purchaseComparator);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 6 -> {
                     Comparator<Purchase> purchaseComparator = Comparator.comparing(Purchase::getLocality);
-                    List<Purchase> purchases = purchaseService.getAllPurchases();
+                    List<Purchase> purchases = purchaseService.getAll();
                     purchases.sort(purchaseComparator);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 7 -> {
                     Comparator<Purchase> purchaseComparator = Comparator.comparing(Purchase::getZipCode);
-                    List<Purchase> purchases = purchaseService.getAllPurchases();
+                    List<Purchase> purchases = purchaseService.getAll();
                     purchases.sort(purchaseComparator);
-                    purchaseService.printPurchases(purchases);
+                    purchaseService.print(purchases);
                 }
                 case 99 -> {
 

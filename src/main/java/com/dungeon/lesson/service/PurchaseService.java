@@ -1,23 +1,17 @@
 package com.dungeon.lesson.service;
 
 import com.dungeon.lesson.dao.PurchaseDao;
-import com.dungeon.lesson.model.Author;
-import com.dungeon.lesson.model.Book;
-import com.dungeon.lesson.model.Gender;
-import com.dungeon.lesson.model.Genre;
 import com.dungeon.lesson.model.Purchase;
-import com.dungeon.lesson.util.DateFormatUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PurchaseService {
-    public static final String BORDER = "----------------------------------------------------------------------------------------------------------------------------------------------"+System.lineSeparator();
-    public static final String HEADER = "| id  | название книги  | имя покупателя |      фамилия       |       страна        |     область       | населенный пункт | почтовый индекс |"+System.lineSeparator();
+public class PurchaseService extends AbstractService<Purchase> {
+    public static final String BORDER = "----------------------------------------------------------------------------------------------------------------------------------------------" + System.lineSeparator();
+    public static final String HEADER = "| id  | название книги  | имя покупателя |      фамилия       |       страна        |     область       | населенный пункт | почтовый индекс |" + System.lineSeparator();
     public static final String PURCHASE_FORMAT = "| %3d | %-15.15s | %-14.14s | %-18.18s | %-19.19s | %-17.17s | %-16.16s |      %5d      |%n";
     private final PurchaseDao purchaseDao;
     private final Scanner scanner = new Scanner(System.in);
@@ -26,7 +20,7 @@ public class PurchaseService {
         purchaseDao = new PurchaseDao(connection);
     }
 
-    public void printPurchases(List<Purchase> purchases) {
+    public void print(List<Purchase> purchases) {
         if (purchases.size() > 0) {
 
             StringBuilder builder = new StringBuilder();
@@ -43,15 +37,17 @@ public class PurchaseService {
             System.out.println("покупки не найдены");
         }
     }
-    private void savePurchase(Purchase purchase) {
+
+    protected void save(Purchase purchase) {
         try {
             purchaseDao.savePurchase(purchase);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public Purchase createPurchase() {
-        Purchase purchase=new Purchase();
+
+    public Purchase create() {
+        Purchase purchase = new Purchase();
         System.out.print("введите название книги : ");
         purchase.setName(scanner.nextLine());
         System.out.print("введите имя покупателя:  ");
@@ -67,11 +63,12 @@ public class PurchaseService {
         System.out.println("введите почтовый индекс");
         purchase.setZipCode(scanner.nextInt());
 
-        savePurchase(purchase);
+        save(purchase);
         return purchase;
     }
-    public List<Purchase>getAllPurchases(){
-        List<Purchase>purchases= new LinkedList<>();
+
+    public List<Purchase> getAll() {
+        List<Purchase> purchases = new LinkedList<>();
         try {
             return purchaseDao.getAllPurchases();
         } catch (SQLException e) {
@@ -80,23 +77,24 @@ public class PurchaseService {
         return purchases;
     }
 
-    private  void deletePurchase(Purchase purchase){
-        try{
+    protected void delete(Purchase purchase) {
+        try {
             purchaseDao.deletePurchase(purchase);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-    public void deletePurchases() {
-        List<Purchase> purchases = getAllPurchases();
-        printPurchases(purchases);
+
+    public void delete() {
+        List<Purchase> purchases = getAll();
+        print(purchases);
         System.out.println("выберите историю покупок: ");
         boolean isCorrect = false;
         do {
             int delete = scanner.nextInt();
             if (delete > 0 && delete <= purchases.size()) {
-                Purchase purchase= purchases.get(delete - 1);
-                deletePurchase(purchase);
+                Purchase purchase = purchases.get(delete - 1);
+                delete(purchase);
                 isCorrect = true;
             } else {
                 System.out.println("введите существующий номер: ");

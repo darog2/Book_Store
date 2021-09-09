@@ -27,13 +27,13 @@ public final class BookMenu extends AbstractMenu {
             choice = scanner.nextInt();
             switch (choice) {
                 case 1 -> {
-                    bookService.printBooks(bookService.getAllBooks());
+                    bookService.print(bookService.getAll());
                 }
                 case 2 -> {
-                    System.out.println(bookService.createBook());
+                    System.out.println(bookService.create());
                 }
                 case 3 -> {
-                    bookService.deleteBook();
+                    bookService.delete();
                 }
                 case 4 -> {
                     searchMenu();
@@ -74,7 +74,7 @@ public final class BookMenu extends AbstractMenu {
                     scanner.nextLine();
                     String name = scanner.nextLine();
                     List<Book> books = bookService.searchBooks(name);
-                    bookService.printBooks(books);
+                    bookService.print(books);
 
                 }
                 case 2 -> {
@@ -82,13 +82,13 @@ public final class BookMenu extends AbstractMenu {
                     scanner.nextLine();
                     String author = scanner.nextLine();
                     List<Book> books = bookService.searchBooksByAuthor(author);
-                    bookService.printBooks(books);
+                    bookService.print(books);
                 }
                 case 3 -> {
                     System.out.print("введите год книги: ");
                     int yearOfIssue = scanner.nextInt();
                     List<Book> books = bookService.searchBooksByYear(yearOfIssue);
-                    bookService.printBooks(books);
+                    bookService.print(books);
                 }
 
                 case 99 -> {
@@ -136,21 +136,21 @@ public final class BookMenu extends AbstractMenu {
 
                 case 1 -> {
                     Comparator<Book> bookComparator = Comparator.comparing(Book::getAuthor);
-                    List<Book> books = bookService.getAllBooks();
+                    List<Book> books = bookService.getAll();
                     books.sort(bookComparator);
-                    bookService.printBooks(books);
+                    bookService.print(books);
                 }
                 case 2 -> {
                     Comparator<Book> bookComparator = Comparator.comparing(Book::getName);
-                    List<Book> books = bookService.getAllBooks();
+                    List<Book> books = bookService.getAll();
                     books.sort(bookComparator);
-                    bookService.printBooks(books);
+                    bookService.print(books);
                 }
                 case 3 -> {
                     Comparator<Book> bookComparator = Comparator.comparing(Book::getYearOfIssue);
-                    List<Book> books = bookService.getAllBooks();
+                    List<Book> books = bookService.getAll();
                     books.sort(bookComparator);
-                    bookService.printBooks(books);
+                    bookService.print(books);
                 }
 
                 case 99 -> {
