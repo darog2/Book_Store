@@ -1,27 +1,26 @@
 package com.dungeon.lesson.menu;
 
 import com.dungeon.lesson.Configuration;
-import com.dungeon.lesson.model.Author;
 import com.dungeon.lesson.model.Book;
-import com.dungeon.lesson.model.Gender;
-import com.dungeon.lesson.model.Genre;
-import com.dungeon.lesson.model.Purchase;
 import com.dungeon.lesson.service.BookService;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class BookMenu {
+public final class BookMenu extends AbstractMenu {
     private final BookService bookService;
-    private final Scanner scanner;
+
 
 
     public BookMenu(Scanner scanner) {
-        this.scanner = scanner;
+        super(scanner, " Меню работы с книгами ");
+
         bookService = new BookService(Configuration.getConnection());
     }
-    public void startMenu(){
+
+    @Override
+    public void startMenu() {
         int choice = 0;
         do {
             printMenu();
@@ -40,7 +39,7 @@ public class BookMenu {
                     searchMenu();
                 }
 
-                case 5 ->{
+                case 5 -> {
                     sortMenu();
                 }
 //                case 10 -> {
@@ -62,7 +61,8 @@ public class BookMenu {
 
     }
 
-    public void searchMenu(){
+    @Override
+    protected void searchMenu() {
         int choice = 0;
         do {
             printSearchMenu();
@@ -103,35 +103,31 @@ public class BookMenu {
         while (choice != 99);
 
     }
-    private void printMenu() {
-        System.out.println(" Меню работы с книгами ");
-        System.out.println("1. показать все  ");
-        System.out.println("2. добавить   ");
-        System.out.println("3. удалить   ");
-        System.out.println("4. поиск ");
-        System.out.println("5. сортировка ");
+
+    @Override
+    protected void printSearchMenu() {
+        System.out.println(" поиск по  ");
+        System.out.println("1. названию   ");
+        System.out.println("2. автору   ");
+        System.out.println("3. году выпуска  ");
+        System.out.println("4. цене");
+
         System.out.println("99 вернутся в предыдущее меню.");
-
     }
-    private void printSearchMenu(){
-         System.out.println(" поиск по  ");
-         System.out.println("1. названию   ");
-         System.out.println("2. автору   ");
-         System.out.println("3. году выпуска  ");
-         System.out.println("4. цене");
 
-         System.out.println("99 вернутся в предыдущее меню.");
-     }
-    private void printSortMenu(){
-         System.out.println(" сортировка по  ");
-         System.out.println("1. названию   ");
-         System.out.println("2. автору   ");
-         System.out.println("3. году выпуска  ");
-         System.out.println("4. цене");
+    @Override
+    protected void printSortMenu() {
+        System.out.println(" сортировка по  ");
+        System.out.println("1. названию   ");
+        System.out.println("2. автору   ");
+        System.out.println("3. году выпуска  ");
+        System.out.println("4. цене");
 
-         System.out.println("99 вернутся в предыдущее меню.");
-     }
-    public void sortMenu(){
+        System.out.println("99 вернутся в предыдущее меню.");
+    }
+
+    @Override
+    protected void sortMenu() {
         int choice = 0;
         do {
             printSortMenu();

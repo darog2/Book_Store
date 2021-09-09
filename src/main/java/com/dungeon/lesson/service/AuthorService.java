@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AuthorService {
+public class AuthorService extends AbstractService<Author> {
 
     public static final String BORDER = "--------------------------------------------------------------------------------------"+System.lineSeparator();
     public static final String HEADER = "| id |      имя     |     фамилия     |    дата рождения   |    страна   |    пол    |"+System.lineSeparator();
@@ -24,8 +24,8 @@ public class AuthorService {
     public AuthorService(Connection connection) {
         authorDao = new AuthorDao(connection);
     }
-
-    public List<Author> getAllAuthors() {
+@Override
+    public List<Author> getAll() {
         List<Author> authors = new LinkedList<>();
         try {
             return authorDao.getAllAuthors();
@@ -35,16 +35,16 @@ public class AuthorService {
         return authors;
 
     }
-
-    private void saveAuthor(Author author) {
+    @Override
+    protected void save(Author author) {
         try {
             authorDao.saveAuthor(author);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    public Author createAuthor() {
+    @Override
+    public Author create() {
         Author author = new Author();
         System.out.print("введите имя : ");
         author.setName(scanner.nextLine());
@@ -75,28 +75,28 @@ public class AuthorService {
             }
         }while (author.getGender()==null);
 
-        saveAuthor(author);
+        save(author);
         return author;
     }
-
-    private void deleteAuthor(Author author) {
+    @Override
+    protected void delete(Author author) {
         try {
             authorDao.deleteAuthor(author);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    public void deleteAuthor() {
-        List<Author> authors = getAllAuthors();
-        printAuthors(authors);
+    @Override
+    public void delete() {
+        List<Author> authors = getAll();
+        print(authors);
         System.out.println("выберите автора для удаления: ");
         boolean isCorrect = false;
         do {
             int delete = scanner.nextInt();
             if (delete > 0 && delete <= authors.size()) {
                 Author author= authors.get(delete - 1);
-                deleteAuthor(author);
+                delete(author);
                 isCorrect = true;
             } else {
                 System.out.println("введите существующий номер: ");
@@ -104,8 +104,8 @@ public class AuthorService {
         } while (!isCorrect);
         System.out.println("книга удалена ");
     }
-
-    public void printAuthors(List<Author> authors) {
+    @Override
+    public void print(List<Author> authors) {
         if (authors.size() > 0) {
             StringBuilder builder = new StringBuilder();
             builder.append(BORDER);

@@ -8,15 +8,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class PurchaseMenu {
+public class  PurchaseMenu extends AbstractMenu{
     private final PurchaseService purchaseService;
-    private final Scanner scanner;
+
 
     public PurchaseMenu(Scanner scanner) {
-        this.scanner = scanner;
+        super(scanner,"действия с меню историей покупок ");
         purchaseService = new PurchaseService(Configuration.getConnection());
     }
-
+@Override
     public void startMenu() {
         int choice = 0;
         do {
@@ -51,17 +51,8 @@ public class PurchaseMenu {
         while (choice != 99);
     }
 
-    private void printMenu() {
-        System.out.println("действия с меню историей покупок ");
-        System.out.println("1 показать  ");
-        System.out.println("2 добавить  ");
-        System.out.println("3 удалить  ");
-        System.out.println("4 поиск ");
-        System.out.println("5 сортировка ");
-        System.out.println("99 вернутся в предыдущее меню. ");
-    }
-
-    private void printSearchMenu() {
+    @Override
+    protected void printSearchMenu() {
         System.out.println("поиск по ");
         System.out.println("1 названию");
         System.out.println("2 имени покупателя");
@@ -72,8 +63,8 @@ public class PurchaseMenu {
         System.out.println("почтовому индексу");
         System.out.println("99 вернутся в предыдущее меню. ");
     }
-
-    private void searchMenu() {
+    @Override
+    protected void searchMenu() {
         int choice = 0;
         do {
             printSearchMenu();
@@ -139,8 +130,8 @@ public class PurchaseMenu {
         }
         while (choice != 99);
     }
-
-    private void printSortMenu() {
+    @Override
+    protected void printSortMenu() {
         System.out.println("сортировать по ");
         System.out.println("1 названию книги");
         System.out.println("2 имени покупателя");
@@ -151,8 +142,8 @@ public class PurchaseMenu {
         System.out.println("7 почтовому индексу");
         System.out.println("99 вернутся в предыдущее меню. ");
     }
-
-    private void sortMenu() {
+    @Override
+    protected void sortMenu() {
         int choice = 0;
         do {
             printSortMenu();

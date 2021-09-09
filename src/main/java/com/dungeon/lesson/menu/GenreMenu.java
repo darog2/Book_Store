@@ -8,15 +8,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class GenreMenu {
+public final class GenreMenu extends AbstractMenu {
     private final GenreService genreService;
-    private final Scanner scanner;
+
 
     public GenreMenu(Scanner scanner) {
-        this.scanner = scanner;
+        super(scanner,"Меню работы с жанрами");
         genreService = new GenreService(Configuration.getConnection());
     }
-
+@Override
     public void startMenu() {
 
         int choice = 0;
@@ -49,26 +49,16 @@ public class GenreMenu {
         }
         while (choice != 99);
     }
-
-    private void printMenu() {
-        System.out.println("Меню работы с жанрами");
-        System.out.println("1 показать все ");
-        System.out.println("2 добавить  ");
-        System.out.println("3 удалить  ");
-        System.out.println("4 поиск ");
-        System.out.println("5 сортировка ");
-        System.out.println("99 вернутся в предыдущее меню. ");
-    }
-
-    private void printSearchMenu() {
+    @Override
+    protected  void printSearchMenu() {
         System.out.println("поиск по ");
         System.out.println(" 1 названию");
         System.out.println(" 2 описанию");
         System.out.println(" 3 году выпуска");
         System.out.println("99 вернутся в предыдущее меню.");
     }
-
-    private void searchMenu() {
+    @Override
+    protected void searchMenu() {
 
         int choice = 0;
         do {
@@ -105,14 +95,16 @@ public class GenreMenu {
         }
         while (choice != 99);
     }
-     private void printSortMenu(){
+    @Override
+     protected void printSortMenu(){
          System.out.println("сортировать по ");
          System.out.println(" 1 названию");
          System.out.println(" 2 описанию");
          System.out.println(" 3 году выпуска");
          System.out.println("99 вернутся в предыдущее меню.");
      }
-    private void sortMenu() {
+    @Override
+    protected void sortMenu() {
 
         int choice = 0;
         do {

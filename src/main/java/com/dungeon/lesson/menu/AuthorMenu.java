@@ -9,16 +9,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class AuthorMenu {
+public class AuthorMenu extends AbstractMenu {
     private final AuthorService authorService;
-    private final Scanner scanner;
+
 
     public AuthorMenu(Scanner scanner) {
-        this.scanner = scanner;
+        super(scanner, "меню работы с авторами");
         authorService = new AuthorService(Configuration.getConnection());
 
     }
 
+    @Override
     public void startMenu() {
         int choice = 0;
         do {
@@ -27,18 +28,18 @@ public class AuthorMenu {
             switch (choice) {
 
                 case 1 -> {
-                    authorService.printAuthors(authorService.getAllAuthors());
+                    authorService.print(authorService.getAll());
                 }
                 case 2 -> {
-                    System.out.println(authorService.createAuthor());
+                    System.out.println(authorService.create());
                 }
                 case 3 -> {
-                    authorService.deleteAuthor();
+                    authorService.delete();
                 }
                 case 4 -> {
                     searchMenu();
                 }
-                case 5 ->{
+                case 5 -> {
                     sortMenu();
                 }
 
@@ -53,18 +54,8 @@ public class AuthorMenu {
         while (choice != 99);
     }
 
-    private void printMenu() {
-        System.out.println("меню работы с авторами");
-        System.out.println("1 посмотреть ");
-        System.out.println("2 добавить  ");
-        System.out.println("3 удалить");
-        System.out.println("4 поиск поиск ");
-        System.out.println("5 сортировка");
-
-        System.out.println("99 вернутся в предыдущее меню. ");
-    }
-
-    private void printSearchMenu() {
+    @Override
+    protected void printSearchMenu() {
         System.out.println("поиск по ");
         System.out.println("имени ");
         System.out.println(" фамилии");
@@ -74,7 +65,8 @@ public class AuthorMenu {
         System.out.println("99 выйти в предыдущие меню");
     }
 
-    private void searchMenu() {
+    @Override
+    protected void searchMenu() {
         int choice = 0;
         do {
             printSearchMenu();
@@ -85,27 +77,27 @@ public class AuthorMenu {
                     scanner.nextLine();
                     String name = scanner.nextLine();
                     List<Author> authors = authorService.searchAuthorsByName(name);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 2 -> {
                     System.out.print("введите фамилию: ");
                     scanner.nextLine();
                     String lastName = scanner.nextLine();
                     List<Author> authors = authorService.searchAuthorsByLastName(lastName);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 3 -> {
                     System.out.print("введите год: ");
                     int dateOfBirth = scanner.nextInt();
                     List<Author> authors = authorService.searchAuthorsByDateOfBirth(dateOfBirth);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 4 -> {
                     System.out.print("введите страну: ");
                     scanner.nextLine();
                     String country = scanner.nextLine();
                     List<Author> authors = authorService.searchAuthorsByCountry(country);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 5 -> {
                     scanner.nextLine();
@@ -125,7 +117,7 @@ public class AuthorMenu {
                             default -> System.out.println("введите правельное значение: ");
                         }
                     } while (gender == null);
-                    authorService.printAuthors(authorService.searchAuthorsByGender(gender));
+                    authorService.print(authorService.searchAuthorsByGender(gender));
 
                 }
                 case 99 -> {
@@ -139,7 +131,8 @@ public class AuthorMenu {
         while (choice != 99);
     }
 
-    private void printSortMenu() {
+    @Override
+    protected void printSortMenu() {
         System.out.println("сортировать по ");
         System.out.println("1 имени");
         System.out.println("2 фамилии");
@@ -150,7 +143,8 @@ public class AuthorMenu {
 
     }
 
-    private void sortMenu() {
+    @Override
+    protected void sortMenu() {
         int choice = 0;
         do {
             printSortMenu();
@@ -158,34 +152,34 @@ public class AuthorMenu {
             switch (choice) {
                 case 1 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getName);
-                    List<Author> authors = authorService.getAllAuthors();
+                    List<Author> authors = authorService.getAll();
                     authors.sort(authorComparator);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
 
                 }
                 case 2 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getLastName);
-                    List<Author> authors = authorService.getAllAuthors();
+                    List<Author> authors = authorService.getAll();
                     authors.sort(authorComparator);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 3 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getDateOfBirth);
-                    List<Author> authors = authorService.getAllAuthors();
+                    List<Author> authors = authorService.getAll();
                     authors.sort(authorComparator);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 4 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getCountry);
-                    List<Author> authors = authorService.getAllAuthors();
+                    List<Author> authors = authorService.getAll();
                     authors.sort(authorComparator);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 5 -> {
                     Comparator<Author> authorComparator = Comparator.comparing(Author::getGender);
-                    List<Author> authors = authorService.getAllAuthors();
+                    List<Author> authors = authorService.getAll();
                     authors.sort(authorComparator);
-                    authorService.printAuthors(authors);
+                    authorService.print(authors);
                 }
                 case 99 -> {
                 }
