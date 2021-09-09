@@ -4,16 +4,21 @@ import com.dungeon.lesson.service.AbstractService;
 
 import java.util.Scanner;
 
-public abstract class AbstractMenu {
-//    protected final S service;
+public abstract class AbstractMenu<SERVICE extends AbstractService> {
+    protected final SERVICE service;
     private String header;
     protected final Scanner scanner;
 
 
-    public AbstractMenu(Scanner scanner,String header) {
+    public AbstractMenu(Scanner scanner, Class<SERVICE> serviceClass, String header) {
         this.header = header;
         this.scanner = scanner;
-//        this.service= sClass.newInstance();
+        try {
+            this.service= serviceClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     protected void printMenu() {
@@ -26,49 +31,46 @@ public abstract class AbstractMenu {
         System.out.println("99 вернутся в предыдущее меню.");
 
     }
-    public abstract void startMenu ();
+//    public abstract void startMenu ();
 
 
     protected abstract void searchMenu();
 
-
-    protected abstract void printSearchMenu();
-
-    protected abstract void printSortMenu();
+    protected abstract void printFieldsMenu(String mode);
 
     protected abstract void sortMenu();
 
-//    public void startMenu() {
-//        int choice = 0;
-//        do {
-//            printMenu();
-//            choice = scanner.nextInt();
-//            switch (choice) {
-//
-//                case 1 -> {
-//                    authorService.printAuthors(authorService.getAllAuthors());
-//                }
-//                case 2 -> {
-//                    System.out.println(authorService.createAuthor());
-//                }
-//                case 3 -> {
-//                    authorService.deleteAuthor();
-//                }
-//                case 4 -> {
-//                    searchMenu();
-//                }
-//                case 5 -> {
-//                    sortMenu();
-//                }
-//
-//                case 99 -> {
-//                }
-//
-//                default -> {
-//                    System.out.println("неправильная команда");
-//                }
-//            }
-//        }
-//        while (choice != 99);
-//    }
+    public void startMenu() {
+        int choice = 0;
+        do {
+            printMenu();
+            choice = scanner.nextInt();
+            switch (choice) {
+
+                case 1 -> {
+                    service.print(service.getAll());
+                }
+                case 2 -> {
+                    System.out.println(service.create());
+                }
+                case 3 -> {
+                    service.delete();
+                }
+                case 4 -> {
+                    searchMenu();
+                }
+                case 5 -> {
+                    sortMenu();
+                }
+
+                case 99 -> {
+                }
+
+                default -> {
+                    System.out.println("неправильная команда");
+                }
+            }
+        }
+        while (choice != 99);
+    }
 }

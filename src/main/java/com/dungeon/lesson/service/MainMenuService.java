@@ -27,9 +27,12 @@ public class MainMenuService {
 
     public MainMenuService() {
         bookMenu = new BookMenu(scanner);
-        authorMenu = new AuthorMenu(scanner);
-        purchaseMenu = new PurchaseMenu(scanner);
-        genreMenu = new GenreMenu(scanner);
+        authorMenu = new AuthorMenu();
+        purchaseMenu = new PurchaseMenu();
+        genreMenu = new GenreMenu();
+//        genreMenu = new GenreMenu(scanner);
+//        authorMenu = new AuthorMenu(scanner);
+//        purchaseMenu = new PurchaseMenu(scanner);
     }
 
     //    }
